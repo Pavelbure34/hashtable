@@ -184,6 +184,7 @@ T List<T>::operator[](int index){
 template<typename T>
 void List<T>::operator=(List<T> &copy){
     //this is assignment operation.
+    clear();         //freeing up memory leak first.
     deepCopy(copy);
 }
 
@@ -242,10 +243,11 @@ T List<T>::pop(){
 template<typename T>
 void List<T>::clear(){
     //this function deletes each node in the list.
-    node<T>* temp = head;
-    for (int i = 0; i < size;i++){
-        delete temp;
-        temp = temp->next;
+    //node<T>* temp = head;
+    for (int i = size - 1; i >= 0 ; i--){
+        this->pop(i);
+        // delete temp;
+        // temp = temp->next;
     }
     size = 0;
 }
@@ -255,14 +257,15 @@ void List<T>::deepCopy(List<T> &copy){
     //this function carry out deep copy.
     clear();                               //reset the whole list first.
     head = new node<T>();
-    head->item = copy[0];                  //copy each item from copy list
-    node<T>* temp = head;                  //to node in the current list.
-    node<T>* newNode;
+    // head->item = copy[0];                  //copy each item from copy list
+    // node<T>* temp = head;                  //to node in the current list.
+    // node<T>* newNode;
     for (int i = 1;i < copy.length();i++){
-        newNode = new node<T>();
-        newNode->item = copy[i];
-        temp->next = newNode;
-        temp = temp->next;
+        this->append(copy[i]);
+        // newNode = new node<T>();
+        // newNode->item = copy[i];
+        // temp->next = newNode;
+        // temp = temp->next;
     }
     size = copy.length();                  //set up the size equivalent to copy list.
 }

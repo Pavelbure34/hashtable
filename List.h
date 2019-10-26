@@ -16,7 +16,7 @@ public:
     T item;
     node<T> *next;
 
-    node(T item = NULL, Node<T>* next = NULL):
+    node(T item = NULL, node<T>* next = NULL):
         item(item), next(next){};
 };
 
@@ -48,9 +48,9 @@ public:
     T pop(int index);
     T pop();
     int findIndex(T item);
+    void clear();
 
 private:
-    void clear();
     void deepCopy(List<T> &copy);
 };
 
