@@ -2,17 +2,8 @@
 #define _HASH_TABLE_H
 #include <iostream>
 #include <string>
+#include "List.h"
 using namespace std;
-
-template<class T>
-class node{
-public:
-    T* item;
-    node<T> *next;
-
-    node(T* item = NULL, Node<T>* next = NULL):
-        item(item), next(next){};
-};
 
 template<class T>
 class hashTable{
