@@ -62,7 +62,7 @@ void List<T>::append(T item){
 template<typename T>
 string List<T>::toString(){
     //this funciton prints out an list into a string.
-    string str = "[";                     //setting up a string
+    string str = "{";                     //setting up a string
     node<T>* temp = head;                 //starting from head node
     for (int i = 0; i < size; i++){       //until the tail node
         str = str + to_string(temp->item);//concatenate each item
@@ -70,7 +70,22 @@ string List<T>::toString(){
             str = str + ",";
         temp = temp->next;                //move to next node.
     }
-    str = str + "]";                  
+    str = str + "}";                  
+    return str;                           //return the full string
+}
+
+template<>
+string List<string>::toString(){
+    //this funciton prints out an list into a string.
+    string str = "{";                     //setting up a string
+    node<string>* temp = head;                 //starting from head node
+    for (int i = 0; i < size; i++){       //until the tail node
+        str = str + temp->item;           //concatenate each item
+        if (i != size - 1)
+            str = str + ",";
+        temp = temp->next;                //move to next node.
+    }
+    str = str + "}";                  
     return str;                           //return the full string
 }
 
@@ -184,7 +199,7 @@ T List<T>::operator[](int index){
 template<typename T>
 void List<T>::operator=(List<T> &copy){
     //this is assignment operation.
-    clear();         //freeing up memory leak first.
+    clear();         //freeing up memory and prevent leak first.
     deepCopy(copy);
 }
 
@@ -244,23 +259,23 @@ template<typename T>
 void List<T>::clear(){
     //this function deletes each node in the list.
     //node<T>* temp = head;
-    for (int i = size - 1; i >= 0 ; i--){
+    for (int i = 0; i < size; i++){
         this->pop(i);
         // delete temp;
         // temp = temp->next;
     }
+    head = NULL;
     size = 0;
 }
 
 template<typename T>
 void List<T>::deepCopy(List<T> &copy){
     //this function carry out deep copy.
-    clear();                               //reset the whole list first.
     head = new node<T>();
     // head->item = copy[0];                  //copy each item from copy list
     // node<T>* temp = head;                  //to node in the current list.
     // node<T>* newNode;
-    for (int i = 1;i < copy.length();i++){
+    for (int i = 0; i < copy.length(); i++){
         this->append(copy[i]);
         // newNode = new node<T>();
         // newNode->item = copy[i];

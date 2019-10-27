@@ -5,15 +5,31 @@
 #include <exception>
 using namespace std;
 
-struct IndexOutOfBoundException:public exception{
+class IndexOutOfBoundException:public exception{
+public:
     const char* what() const throw(){
         return "IndexOutOfBoundException";
     }
 };
 
-struct InvalidInputException:public exception{
+class InvalidInputException:public exception{
+public:
     const char* what() const throw(){
         return "InvalidInputException";
+    }
+};
+
+class noKeyException: public exception{
+public:
+    const char* what() const throw(){
+        return "No Key was found";
+    }
+};
+
+class fullTableException: public exception{
+public:
+    const char* what() const throw(){
+        return "hash table has no empty slot left.";
     }
 };
 

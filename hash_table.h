@@ -5,7 +5,7 @@
 #include "List.h"
 using namespace std;
 
-#define DEFAULT_SLOTS 5
+#define DEFAULT_SLOTS 100
 
 template<class T>
 class hashTable{
@@ -26,15 +26,16 @@ public:
     void operator=(const hashTable<T> &h);
     string toStr(int slot) const;
     List<T>* getTable() const;
-    // friend ostream& operator<<(ostream &o, hash<T> &h){
-    //     //this friend function enables osteam operator.
-    //     o << h.toStr();
-    //     return o;
-    // }
 
 private:
+    void initializer(int sNum);
     void copy(const hashTable<T> &h);
     void destroy();
+    int getLocation(const T &k) const;
+
+    //for hash open addressing and chaining
+    int genSlotNum() const;
+    int minItemSlot() const;
 };
 #include "hash_table.cpp"
 #endif
