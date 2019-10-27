@@ -13,7 +13,7 @@ hashTable<T>::hashTable(const hashTable<T> &h){
 
 template<class T>
 hashTable<T>::~hashTable(){
-    destroy();                      //calling private destroy
+    destroy();                //calling private destroy
 }
 
 template<class T>

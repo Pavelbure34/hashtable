@@ -67,7 +67,7 @@ int main(){
     }
 
     //testing loadfactor
-    assert(iht.loadfactor() == 2);
+    assert(iht.loadfactor() == 2); //10 items in 5 slots
     assert(dht.loadfactor() == 2);
     assert(fht.loadfactor() == 2);
     assert(cht.loadfactor() == 2);
