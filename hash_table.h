@@ -11,6 +11,7 @@ template<class T>
 class hashTable{
 private:
     int slots;        //slots
+    int items;        //number of items for calculating load factor
     List<T> *table;   //an array of List<T>
 
 public:
@@ -26,6 +27,8 @@ public:
     void operator=(const hashTable<T> &h);
     string toStr(int slot) const;
     List<T>* getTable() const;
+
+    double loadfactor() const;
 
 private:
     void initializer(int sNum);

@@ -17,6 +17,17 @@ hashTable<T>::~hashTable(){
 }
 
 template<class T>
+double hashTable<T>::loadfactor() const{
+    /*
+        this function returns the load factor.
+
+        Pre-condition:
+            table has to be initialized as an array of List<T>
+    */
+    return double(items) / slots;
+}
+
+template<class T>
 void hashTable<T>::initializer(int sNum){
     /*
         this fuction set up the class property based on the parameter.
@@ -25,6 +36,7 @@ void hashTable<T>::initializer(int sNum){
             table and slots has yet to be initialized.
     */
     slots = sNum;                 //copying slots
+    items = 0;
     table = new List<T>[slots];   //initializing table pointer
 }
 
@@ -54,6 +66,12 @@ int hashTable<T>::slotNum() const{
 
 template<class T>
 void hashTable<T>::insert(T *k){
+    /*
+        this function insert item into the hash table.
+
+        Pre-Condition:
+            table has to be initialized as an array of List<T>
+    */
     int slotNumber;
     try{
         slotNumber = genSlotNum();  //search for empty spot
@@ -61,6 +79,7 @@ void hashTable<T>::insert(T *k){
         slotNumber = minItemSlot(); //find spot with min number of item
     }
     table[slotNumber].append(*k);   //append the item.
+    items++;
 }
 
 template<class T>
@@ -113,6 +132,7 @@ void hashTable<T>::remove(const T &k){
         index = table[i].findIndex(k);
         if (index != -1){
             table[i].remove(k);
+            items--;
             return;
         }
     }
@@ -121,6 +141,9 @@ void hashTable<T>::remove(const T &k){
 
 template<class T>
 void hashTable<T>::operator=(const hashTable<T> &h){
+   /*
+        this is assigment operation.
+   */
    destroy();                 //freeing memory first
    initializer(h.slotNum());  //initializing class properties
    copy(h);                   //deep copy the h.
@@ -148,8 +171,10 @@ void hashTable<T>::copy(const hashTable<T> &h){
         Precondition: table has to initialized with h's slot num
     */
     List<T>* copyL = h.getTable();          //table from h
-    for (int i = 0; i < h.slotNum(); i++)
+    for (int i = 0; i < h.slotNum(); i++){
         table[i] = copyL[i];                //deep copying element to element.
+        items++;
+    }
 }
     
 template<class T>
@@ -162,7 +187,7 @@ void hashTable<T>::destroy(){
     for (int i = 0; i < slots; i++) //going through every slot
         if (table[i].length() != 0) //if linked list in the slot is not empty
             table[i].clear();       //clear the single linked list
-
+    items = slots = 0;
     //delete table;                   //delete the pointer. fix here
 }
 

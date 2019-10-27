@@ -19,7 +19,7 @@ int main(){
     hashTable<double> cDht1 = dht;
     hashTable<float> cFht1 = fht;
     hashTable<char> cCht1 = cht;
-    hashTable<string> cSht1 = sht;
+    //hashTable<string> cSht1 = sht;
 
     //testing copy constructor on empty tree
     hashTable<int> cIht2(iht);
@@ -65,6 +65,12 @@ int main(){
         cout << "cht" << cht.toStr(i) << endl;
         cout << "fht" << fht.toStr(i) << endl;
     }
+
+    //testing loadfactor
+    assert(iht.loadfactor() == 2);
+    assert(dht.loadfactor() == 2);
+    assert(fht.loadfactor() == 2);
+    assert(cht.loadfactor() == 2);
 
     //testing assingment operator and copy constructor with non empty tree
     hashTable<int> cIht3 = iht;
