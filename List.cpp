@@ -7,7 +7,7 @@
 
 template<typename T>
 List<T>::List(){//default constructor
-    head = NULL;                         
+    head = NULL;
 }
 
 template<typename T>
@@ -21,33 +21,35 @@ List<T>::~List(){
 }
 
 template<typename T>
-int List<T>::findIndex(T item){
+int List<T>::findIndex(const T &item) const{
     //this funciton returns the index of the item within the list
-    for (int i = 0; i < size;i++)
-        if ((*this)[i] == item)
+    for (int i = 0; i < size;i++){
+        T* target = (*this)[i];
+        if (*target == item)
             return i;
+    }
     return -1;
 }
 
 template<typename T>
-void List<T>::append(T item){
+void List<T>::append(T *item){
     //this function appends item at the end.
     switch(size){
         case 0:                              //if size equals to 0,
             head = new node<T>();            //set up head with new item.
-            head->item = item;
+            head->item = new T(*item);
             head->next = NULL;
             size++;                          //increment the size
             return;
         case 1:                              //if size equals to 1,
             head->next = new node<T>();      //just next to head
-            head->next->item = item;         //set up new node
+            head->next->item = new T(*item); //set up new node
             head->next->next = NULL;
             size++;                          //increment the size
             return;
         default:                             //if size is bigger than 1,
             node<T>* newNode = new node<T>();//set up new node.
-            newNode->item = item;
+            newNode->item = new T(*item);
             newNode->next = NULL;
             node<T>* temp = head;            //move up to the last node.
             for (int i = 0; i < size-1;i++){
@@ -70,7 +72,7 @@ string List<T>::toString(){
             str = str + ",";
         temp = temp->next;                //move to next node.
     }
-    str = str + "}";                  
+    str = str + "}";
     return str;                           //return the full string
 }
 
@@ -80,12 +82,12 @@ string List<string>::toString(){
     string str = "{";                     //setting up a string
     node<string>* temp = head;                 //starting from head node
     for (int i = 0; i < size; i++){       //until the tail node
-        str = str + temp->item;           //concatenate each item
+        str = str + *(temp->item);           //concatenate each item
         if (i != size - 1)
             str = str + ",";
         temp = temp->next;                //move to next node.
     }
-    str = str + "}";                  
+    str = str + "}";
     return str;                           //return the full string
 }
 
@@ -104,23 +106,22 @@ int List<T>::count(T item){
         if (temp->item == item)
             count++;                //increment the count
         temp = temp->next;          //move to next node.
-    } 
+    }
     return count;                   //return the count.
 }
 
 template<typename T>
-bool List<T>::remove(T item){
+void List<T>::remove(const T &item){
     //this function deletes the item from the list based on given item.
     node<T>* temp =  head;                        //pointer object for temp as head
     node<T>* deleteNode;                          //pointer object for item for delete
-    if (temp->item == item){                      //if item is at head
+    if (*(temp->item) == item){                      //if item is at head
         head = temp->next;                        //set node next to head as head
         delete temp;                              //delete the old head
         size--;                                   //decrement the size
-        return true;                              //return true
     }else{                                        //if not,
         for (int i = 0;i < size-1;i++){           //go through each node
-            if (temp->next->item == item){
+            if (*(temp->next->item) == item){
                 deleteNode = temp->next;
                 if (i ==  size - 2){              //if it is in the last node,
                     temp->next = NULL;            //just delete the last node.
@@ -130,29 +131,27 @@ bool List<T>::remove(T item){
                     delete deleteNode;            //then delete the target node.
                 }
                 size--;                           //decrement the size
-                return true;                      //returnt true
             }
             temp = temp->next;                    //iteration
         }
     }
-    return false;                                 //return false if not found.
 }
 
 template<typename T>
-void List<T>::insert(T item, int index){
+void List<T>::insert(T *item, int index){
     //this function inserts the element between the list.
     try{
         if (index > size-1 || index < size * -1)           //if index is out of bound,
             throw new IndexOutOfBoundException;            //throw an error
         node<T>* temp =  head;                             //set up temp as head
         node<T>* newNode = new node<T>();                  //set up new node
-        newNode->item = item;
+        *(newNode->item) = *item;
         if (index == 0 || index == size * -1){             //if insert to head
             newNode->next = temp;                          //append at the front.
             head = newNode;                                //make it as new head
         }else{
             if (index >= 0)                                //if positive index,
-                for (int i = 0;i < index-1;i++){             
+                for (int i = 0;i < index-1;i++){
                     temp = temp->next;
                 }
             if (index < 0)                                 //if negative index,
@@ -169,7 +168,7 @@ void List<T>::insert(T item, int index){
 }
 
 template<typename T>
-T List<T>::operator[](int index){
+T* List<T>::operator[](int index){
     //this operator returns the item in the given index.
     try{
         if (index >= size || index < size * -1)   //if index is out of bound,
@@ -192,7 +191,7 @@ T List<T>::operator[](int index){
             return temp->item;
         }
     }catch(IndexOutOfBoundException& e){
-        cout << e.what() << endl;      
+        cout << e.what() << endl;
     }
 }
 
@@ -204,18 +203,18 @@ void List<T>::operator=(List<T> &copy){
 }
 
 template<typename T>
-T List<T>::pop(int index){
+T* List<T>::pop(int index){
     //this function deletes the element with the given element.
     try{
         if (index > size-1 || index < size * -1)        //if index is out of bound,
             throw new IndexOutOfBoundException;         //throw an error
-        T returnValue;                                  //set up return value
+        T* returnValue;                                  //set up return value
         node<T>* temp = head;                           //set up temp as head
         node<T>* deleteValue;                           //delete value
         if (index == 0 || index == size * -1){          //if index is at head,
             returnValue = temp->item;                   //pop the old head
             head = temp->next;                          //make second node as new head
-            delete temp;  
+            delete temp;
             size--;                                     //decrement the size
             return returnValue;
         }else if (index == size-1 || index == -1){      //if at the end,
@@ -242,9 +241,9 @@ T List<T>::pop(int index){
 }
 
 template<typename T>
-T List<T>::pop(){
+T* List<T>::pop(){
     //pop function overloaded #1
-    T returnValue;                          
+    T* returnValue;
     node<T>* temp = head;
     for (int i = 0;i < size-1;i++){
         temp = temp->next;
@@ -276,14 +275,11 @@ void List<T>::deepCopy(List<T> &copy){
     // node<T>* temp = head;                  //to node in the current list.
     // node<T>* newNode;
     for (int i = 0; i < copy.length(); i++){
-        cout << 4 << endl; //for string, this loop does not initiate.
         this->append(copy[i]);
-        cout << 5 << endl;
         // newNode = new node<T>();
         // newNode->item = copy[i];
         // temp->next = newNode;
         // temp = temp->next;
     }
-    cout << 6 << endl;
     size = copy.length();                  //set up the size equivalent to copy list.
 }

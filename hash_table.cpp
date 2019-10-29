@@ -41,7 +41,7 @@ bool hashNode<S,T>::operator<=(hashNode<S, T> &node) const{
 //     str += ":";
 //     str += to_string(this->value);
 //     return str;
-// }  
+// }
 
 template<class T>
 hashTable<T>::hashTable(int numSlots){
@@ -115,9 +115,8 @@ void hashTable<T>::insert(T *k){
         Pre-Condition:
             table has to be initialized as an array of List<T>
     */
-    int slotNumber;
-    hash(slotNumber);               //key from hash function
-    table[slotNumber].append(*k);   //append the item.
+    int key = hash(*k);               //key from hash function
+    table[key].append(k);   //append the item.
     items++;
 }
 
@@ -125,7 +124,6 @@ template<class T>
 void hashTable<T>::remove(const T &k){
     /*
         This function finds and remove the value inside
-
         PreCondition: table has to be initialized as array of List<T>.
     */
     int index;
@@ -168,7 +166,7 @@ string hashTable<T>::toStr(int slot) const{
 template<class T>
 int hashTable<T>::itemNum() const{
     /*
-        this function returns the 
+        this function returns the
     */
     return items;
 }
@@ -181,8 +179,8 @@ int hashTable<T>::hash(T &key) const{
         PreCondition:
             table has to be initialized as an array of List<T>.
     */
-    double A = (sqrt(5) - 1) / 2;
-    return slots * ((A * key) % 1);
+    int A = (sqrt(5) - 1) / 2;
+    return slots * (A * int(key)% 1);
 }
 
 template<>
@@ -193,8 +191,8 @@ int hashTable<char>::hash(char &key) const{
         PreCondition:
             table has to be initialized as an array of List<T>.
     */
-    double A = (sqrt(5) - 1) / 2;
-    return slots * ((A * int(key)) % 1);
+    int A = (sqrt(5) - 1) / 2;
+    return slots * (A * int(key) % 1);
 }
 
 template<>
@@ -205,11 +203,11 @@ int hashTable<string>::hash(string &key) const{
         PreCondition:
             table has to be initialized as an array of List<T>.
     */
-    double sum;
+    int sum;
     for (int i = 0; i < key.length(); i++)
         sum += key[i];
     sum = sum / key.length();
-    double A = (sqrt(5) - 1) / 2;
+    int A = (sqrt(5) - 1) / 2;
     return slots * ((A *sum) % 1);
 }
 
@@ -221,12 +219,12 @@ void hashTable<T>::copy(const hashTable<T> &h){
     */
     List<T>* copyL = h.getTable();   //table from h
     for (int i = 0; i < h.slotNum(); i++){
+
         table[i] = copyL[i];         //deep copying element to element.
-        cout << 10 << endl;
         items++;
     }
 }
-    
+
 template<class T>
 void hashTable<T>::destroy(){
    /*
@@ -250,7 +248,7 @@ List<T>* hashTable<T>::getTable() const{
 template<class T>
 int hashTable<T>::getLocation(const T &k) const{
     /*
-        this function returns the exact location 
+        this function returns the exact location
         of the item within the table.
 
         Pre-condition:
@@ -259,7 +257,7 @@ int hashTable<T>::getLocation(const T &k) const{
     int key, index;
     for (int i = 0; i < slots; i++){         //iterating among each key
         index = table[i].findIndex(k);       //if item found,
-        if (index != -1){             
+        if (index != -1){
             key = i;                         //get the hash key
             return (i * slots * 10) + index; //return after giving a pattern.
         }

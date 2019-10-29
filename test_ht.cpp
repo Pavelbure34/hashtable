@@ -8,28 +8,26 @@
 int main(){
     LOG(INIT);
     //testing with default constructor
-    // hashTable<int> iht(5);
-    // hashTable<double> dht(5);
-    // hashTable<float> fht(5);
-    // hashTable<char> cht(5);
+    hashTable<int> iht(5);
+    hashTable<double> dht(5);
+    hashTable<float> fht(5);
+    hashTable<char> cht(5);
     hashTable<string> sht(5);
 
     //testing assignment operator on empty tree
-    // hashTable<int> cIht1 = iht;
-    // hashTable<double> cDht1 = dht;
-    // hashTable<float> cFht1 = fht;
-    // hashTable<char> cCht1 = cht;
-    hashTable<string> cSht1 = sht;
+    hashTable<int> cIht1 = iht;
+    hashTable<double> cDht1 = dht;
+    hashTable<float> cFht1 = fht;
+    hashTable<char> cCht1 = cht;
 
     // //testing copy constructor on empty tree
-    // hashTable<int> cIht2(iht);
-    // hashTable<double> cDht2(dht);
-    // hashTable<float> cFht2(fht);
-    // hashTable<char> cCht2(cht);
-    // hashTable<string> cSht2(sht);
+    hashTable<int> cIht2(iht);
+    hashTable<double> cDht2(dht);
+    hashTable<float> cFht2(fht);
+    hashTable<char> cCht2(cht);
 
     // //testing toStr with empty tree
-    // for (int i = 0; i < iht.slotNum(); i++){
+    //  for (int i = 0; i < iht.slotNum(); i++){
     //     assert(iht.toStr(i) == cIht1.toStr(i));
     //     assert(iht.toStr(i) == cIht2.toStr(i));
     //     assert(dht.toStr(i) == cDht1.toStr(i));
@@ -37,24 +35,22 @@ int main(){
     //     assert(fht.toStr(i) == cFht1.toStr(i));
     //     assert(fht.toStr(i) == cFht2.toStr(i));
     //     assert(cht.toStr(i) == cCht1.toStr(i));
-    //     assert(cht.toStr(i) == cCht2.toStr(i));
-    //     // assert(sht.toStr(i) == cSht1.toStr(i));
-    //     // assert(sht.toStr(i) == cSht2.toStr(i));
+    //
     // }
 
-    // //testing insert and embedded genSlotNum, minItemSlot.
-    // for (int i = 0; i < 10; i++){
-    //     int *inum = new int(i+1);
-    //     double *dnum = new double(i+1.0);
-    //     float *fnum = new float(i+1.0f);
-    //     char *cnum = new char(i+60);
-    //     //string *snum = new string(to_string(i));
-    //     iht.insert(inum);
-    //     dht.insert(dnum);
-    //     fht.insert(fnum);
-    //     cht.insert(cnum);
-    //     //sht.insert(snum);
-    // }
+    //testing insert and embedded genSlotNum, minItemSlot.
+    for (int i = 0; i < 10; i++){
+        int *inum = new int(i+1);
+        double *dnum = new double(i+1.0);
+        float *fnum = new float(i+1.0f);
+        char *cnum = new char(i+60);
+        string *snum = new string(to_string(i));
+        iht.insert(inum);
+        dht.insert(dnum);
+        fht.insert(fnum);
+        cht.insert(cnum);
+        sht.insert(snum);
+     }
     // //reaching here, getSlotNum and minItemSlot has been working fine.
 
     // //testing toStr with each slot
@@ -82,7 +78,7 @@ int main(){
     // hashTable<char> cCht3 = cht;
     // hashTable<char> cCht4(cht);
 
-    
+
     // //testing toStr with non empty tree
     // for (int i = 0; i < 5; i++){
     //     assert(iht.toStr(i) == cIht3.toStr(i));

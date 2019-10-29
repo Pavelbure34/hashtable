@@ -13,10 +13,10 @@ using namespace std;
 template<class T>
 class node{
 public:
-    T item;
+    T* item;
     node<T> *next;
 
-    node(T item = NULL, node<T>* next = NULL):
+    node(T* item = NULL, node<T>* next = NULL):
         item(item), next(next){};
 };
 
@@ -32,22 +32,22 @@ public:
     List(List<T> &copy);//copyConstructor
     ~List();            //constructor
 
-    void append(T item);
+    void append(T* item);
     string toString();
     int length();
     int count(T item);
-    bool remove(T item);
-    void insert(T item, int index);
-    T operator[](int index);
+    void remove(const T& item);
+    void insert(T *item, int index);
+    T* operator[](int index);
     void operator=(List<T> &copy);
     friend ostream& operator<<(ostream &o, List<T> &list){
         //this friend function enables osteam operator.
         o << list.toString();
         return o;
     }
-    T pop(int index);
-    T pop();
-    int findIndex(T item);
+    T* pop(int index);
+    T* pop();
+    int findIndex(const T &item) const;
     void clear();
 
 private:
