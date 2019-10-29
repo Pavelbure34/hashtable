@@ -21,11 +21,13 @@ List<T>::~List(){
 }
 
 template<typename T>
-int List<T>::findIndex(const T &item) const{
+int List<T>::findIndex(const T &item) {
     //this funciton returns the index of the item within the list
+    List<T> temp = *this;
+    T target;
     for (int i = 0; i < size;i++){
-        T* target = (*this)[i];
-        if (*target == item)
+        target = *temp[i];
+        if (target == item)
             return i;
     }
     return -1;
@@ -67,7 +69,7 @@ string List<T>::toString(){
     string str = "{";                     //setting up a string
     node<T>* temp = head;                 //starting from head node
     for (int i = 0; i < size; i++){       //until the tail node
-        str = str + to_string(temp->item);//concatenate each item
+        str = str + to_string(*(temp->item));//concatenate each item
         if (i != size - 1)
             str = str + ",";
         temp = temp->next;                //move to next node.

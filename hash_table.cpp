@@ -95,7 +95,8 @@ T* hashTable<T>::get(const T &k) const{
     for (int i = 0; i < slots; i++){
         index = table[i].findIndex(k);
         if (index != -1){
-            T *val = new T(table[i][index]);
+
+            T *val = new T(*table[i][index]);
             return val;
         }
     }
@@ -179,8 +180,8 @@ int hashTable<T>::hash(T &key) const{
         PreCondition:
             table has to be initialized as an array of List<T>.
     */
-    int A = (sqrt(5) - 1) / 2;
-    return slots * (A * int(key)% 1);
+    double A = (sqrt(5) - 1) / 2;
+    return slots * (fmod(A * double(key), 1));
 }
 
 template<>
@@ -191,8 +192,8 @@ int hashTable<char>::hash(char &key) const{
         PreCondition:
             table has to be initialized as an array of List<T>.
     */
-    int A = (sqrt(5) - 1) / 2;
-    return slots * (A * int(key) % 1);
+    double A = (sqrt(5) - 1) / 2;
+    return slots * (fmod(A * double(key), 1));
 }
 
 template<>
@@ -207,8 +208,8 @@ int hashTable<string>::hash(string &key) const{
     for (int i = 0; i < key.length(); i++)
         sum += key[i];
     sum = sum / key.length();
-    int A = (sqrt(5) - 1) / 2;
-    return slots * ((A *sum) % 1);
+    double A = (sqrt(5) - 1) / 2;
+    return slots * (fmod(A * double(sum), 1));
 }
 
 template<class T>
@@ -243,23 +244,4 @@ template<class T>
 List<T>* hashTable<T>::getTable() const{
     //this function returns the pointer of the table.
     return table;
-}
-
-template<class T>
-int hashTable<T>::getLocation(const T &k) const{
-    /*
-        this function returns the exact location
-        of the item within the table.
-
-        Pre-condition:
-            table has to be initialized as an array of List<T>
-    */
-    int key, index;
-    for (int i = 0; i < slots; i++){         //iterating among each key
-        index = table[i].findIndex(k);       //if item found,
-        if (index != -1){
-            key = i;                         //get the hash key
-            return (i * slots * 10) + index; //return after giving a pattern.
-        }
-    }
 }
