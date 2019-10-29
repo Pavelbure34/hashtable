@@ -276,11 +276,14 @@ void List<T>::deepCopy(List<T> &copy){
     // node<T>* temp = head;                  //to node in the current list.
     // node<T>* newNode;
     for (int i = 0; i < copy.length(); i++){
+        cout << 4 << endl; //for string, this loop does not initiate.
         this->append(copy[i]);
+        cout << 5 << endl;
         // newNode = new node<T>();
         // newNode->item = copy[i];
         // temp->next = newNode;
         // temp = temp->next;
     }
+    cout << 6 << endl;
     size = copy.length();                  //set up the size equivalent to copy list.
 }

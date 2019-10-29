@@ -1,5 +1,48 @@
 #include "hash_table.h"
 
+template<class S, class T>
+bool hashNode<S,T>::operator<(hashNode<S, T> &node) const{
+    return this->key < node.key;
+}
+
+template<class S, class T>
+bool hashNode<S,T>::operator>(hashNode<S, T> &node) const{
+    return this->key > node.key;
+}
+
+template<class S, class T>
+bool hashNode<S,T>::operator==(hashNode<S, T> &node) const{
+    return this->key == node.key;
+}
+
+template<class S, class T>
+bool hashNode<S,T>::operator>=(hashNode<S, T> &node) const{
+    return this->key >= node.key;
+}
+
+template<class S, class T>
+bool hashNode<S,T>::operator<=(hashNode<S, T> &node) const{
+    return this->key <= node.key;
+}
+
+// template<class S, class T>
+// string hashNode<S,T>::toString() const{
+//     string str = "";
+//     str += to_string(this->key);
+//     str += ":";
+//     str += to_string(this->value);
+//     return str;
+// }
+
+// template<, class T>
+// string hashNode<string,T>::toString() const{
+//     string str = "";
+//     str += this->key;
+//     str += ":";
+//     str += to_string(this->value);
+//     return str;
+// }  
+
 template<class T>
 hashTable<T>::hashTable(int numSlots){
     initializer(numSlots); //initializing class properties
@@ -73,51 +116,9 @@ void hashTable<T>::insert(T *k){
             table has to be initialized as an array of List<T>
     */
     int slotNumber;
-    try{
-        slotNumber = genSlotNum();  //search for empty spot
-    }catch(fullTableException *e){  //if not full
-        slotNumber = minItemSlot(); //find spot with min number of item
-    }
+    hash(slotNumber);               //key from hash function
     table[slotNumber].append(*k);   //append the item.
     items++;
-}
-
-template<class T>
-int hashTable<T>::genSlotNum() const{
-    /*
-        This function returns the slot where
-        there is no item stored yet, thus
-        using open addressing with linear probing
-
-        Pre-condition:
-            table has to be initialzied as array of List<T>.
-            table has to have empty slot.
-    */
-    for (int i = 0; i < slots; i++)
-        if (table[i].length() == 0)
-            return i;
-    throw new fullTableException;
-}
-
-template<class T>
-int hashTable<T>::minItemSlot() const{
-    /*
-        This function returns the slot where
-        there is a minimum number of item inside,
-        thus, executing chaining operation only if needed
-
-        Pre-condition:
-            table has to be initialzied as array of List<T>.
-            table has to have no empty slots.
-    */
-    int min = table[0].length();
-    int spot = 0;
-    for (int i = 1; i < slots; i++)
-        if (table[i].length() < min){
-            min = table[i].length();
-            spot = i;
-        }
-    return spot;
 }
 
 template<class T>
@@ -165,14 +166,63 @@ string hashTable<T>::toStr(int slot) const{
 }
 
 template<class T>
+int hashTable<T>::itemNum() const{
+    /*
+        this function returns the 
+    */
+    return items;
+}
+
+template<class T>
+int hashTable<T>::hash(T &key) const{
+    /*
+        this function returns key for hashtable in key-value pair.
+
+        PreCondition:
+            table has to be initialized as an array of List<T>.
+    */
+    double A = (sqrt(5) - 1) / 2;
+    return slots * ((A * key) % 1);
+}
+
+template<>
+int hashTable<char>::hash(char &key) const{
+    /*
+        this function returns key for hashtable in key-value pair.
+
+        PreCondition:
+            table has to be initialized as an array of List<T>.
+    */
+    double A = (sqrt(5) - 1) / 2;
+    return slots * ((A * int(key)) % 1);
+}
+
+template<>
+int hashTable<string>::hash(string &key) const{
+    /*
+        this function returns key for hashtable in key-value pair.
+
+        PreCondition:
+            table has to be initialized as an array of List<T>.
+    */
+    double sum;
+    for (int i = 0; i < key.length(); i++)
+        sum += key[i];
+    sum = sum / key.length();
+    double A = (sqrt(5) - 1) / 2;
+    return slots * ((A *sum) % 1);
+}
+
+template<class T>
 void hashTable<T>::copy(const hashTable<T> &h){
     /*
         This function executes the deep copy.
         Precondition: table has to initialized with h's slot num
     */
-    List<T>* copyL = h.getTable();          //table from h
+    List<T>* copyL = h.getTable();   //table from h
     for (int i = 0; i < h.slotNum(); i++){
-        table[i] = copyL[i];                //deep copying element to element.
+        table[i] = copyL[i];         //deep copying element to element.
+        cout << 10 << endl;
         items++;
     }
 }
@@ -187,8 +237,8 @@ void hashTable<T>::destroy(){
     for (int i = 0; i < slots; i++) //going through every slot
         if (table[i].length() != 0) //if linked list in the slot is not empty
             table[i].clear();       //clear the single linked list
-    items = slots = 0;
-    //delete table;                   //delete the pointer. fix here
+    items = slots = 0;              //back to 0
+    //delete table;                 //delete the pointer. fix here
 }
 
 template<class T>

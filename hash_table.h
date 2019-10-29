@@ -2,10 +2,30 @@
 #define _HASH_TABLE_H
 #include <iostream>
 #include <string>
+#include <cmath>
 #include "List.h"
 using namespace std;
 
-#define DEFAULT_SLOTS 100
+#define DEFAULT_SLOTS 1000
+
+template<class S, class T>
+class hashNode{
+public:
+    S key;
+    T value;
+
+    hashNode(S key = NULL, T value = NULL)
+        :key(key), value(value){};
+
+    bool operator<(hashNode<S, T> &node) const;
+    bool operator>(hashNode<S, T> &node) const;
+    bool operator==(hashNode<S, T> &node) const;
+    bool operator>=(hashNode<S, T> &node) const;
+    bool operator<=(hashNode<S, T> &node) const;
+
+private:
+    string toString() const;
+};
 
 template<class T>
 class hashTable{
@@ -23,6 +43,7 @@ public:
     void insert(T *k);
     void remove(const T &k);
     int slotNum() const;
+    int itemNum() const;
 
     void operator=(const hashTable<T> &h);
     string toStr(int slot) const;
@@ -31,14 +52,11 @@ public:
     double loadfactor() const;
 
 private:
+    int hash(T &val) const;
     void initializer(int sNum);
     void copy(const hashTable<T> &h);
     void destroy();
     int getLocation(const T &k) const;
-
-    //for hash open addressing and chaining
-    int genSlotNum() const;
-    int minItemSlot() const;
 };
 #include "hash_table.cpp"
 #endif
