@@ -31,7 +31,7 @@ public:
     List();             //default constructor
     List(List<T> &copy);//copyConstructor
     ~List();            //constructor
-
+    void prepend(T* item);
     void append(T* item);
     string toString();
     int length();

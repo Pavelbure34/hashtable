@@ -29,7 +29,7 @@ private:
 
 template<class T>
 class hashTable{
-private:
+protected:
     int slots;        //slots
     int items;        //number of items for calculating load factor
     List<T> *table;   //an array of List<T>
@@ -51,7 +51,7 @@ public:
 
     double loadfactor() const;
 
-private:
+protected:
     int hash(T &val) const;
     void initializer(int sNum);
     void copy(const hashTable<T> &h);

@@ -34,6 +34,21 @@ int List<T>::findIndex(const T &item) {
 }
 
 template<typename T>
+void List<T>::prepend(T *item){
+    switch(size){
+        case 0:
+            append(item);
+            break;
+        default:
+            node<T>* temp = new node<T>();
+            temp->item = new T(*item);
+            temp->next = head;
+            head = temp;
+            size++;
+    }
+}
+
+template<typename T>
 void List<T>::append(T *item){
     //this function appends item at the end.
     switch(size){

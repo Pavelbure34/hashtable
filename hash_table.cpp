@@ -1,4 +1,5 @@
 #include "hash_table.h"
+#define KA (sqrt(7) - 2.0) / 2.0
 
 template<class S, class T>
 bool hashNode<S,T>::operator<(hashNode<S, T> &node) const{
@@ -95,7 +96,6 @@ T* hashTable<T>::get(const T &k) const{
     for (int i = 0; i < slots; i++){
         index = table[i].findIndex(k);
         if (index != -1){
-
             T *val = new T(*table[i][index]);
             return val;
         }
@@ -116,8 +116,8 @@ void hashTable<T>::insert(T *k){
         Pre-Condition:
             table has to be initialized as an array of List<T>
     */
-    int key = hash(*k);               //key from hash function
-    table[key].append(k);   //append the item.
+    int key = hash(*k);        //key from hash function
+    table[key].prepend(k);   //prepend the item.
     items++;
 }
 
@@ -180,8 +180,7 @@ int hashTable<T>::hash(T &key) const{
         PreCondition:
             table has to be initialized as an array of List<T>.
     */
-    double A = (sqrt(5) - 1) / 2;
-    return slots * (fmod(A * double(key), 1));
+    return slots * (fmod(KA * double(key), 1));
 }
 
 template<>
@@ -192,8 +191,7 @@ int hashTable<char>::hash(char &key) const{
         PreCondition:
             table has to be initialized as an array of List<T>.
     */
-    double A = (sqrt(5) - 1) / 2;
-    return slots * (fmod(A * double(key), 1));
+    return slots * (fmod(KA * double(key), 1));
 }
 
 template<>
@@ -204,12 +202,11 @@ int hashTable<string>::hash(string &key) const{
         PreCondition:
             table has to be initialized as an array of List<T>.
     */
-    int sum;
+    double sum = 0.0;
     for (int i = 0; i < key.length(); i++)
-        sum += key[i];
-    sum = sum / key.length();
-    double A = (sqrt(5) - 1) / 2;
-    return slots * (fmod(A * double(sum), 1));
+        sum += (int(key[i]) * (i + 1));
+    sum = sum / double(key.length());
+    return slots * (fmod(KA * double(sum), 1));
 }
 
 template<class T>

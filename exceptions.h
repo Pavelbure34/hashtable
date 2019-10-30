@@ -33,4 +33,11 @@ public:
     }
 };
 
+class duplicateKeyException:public exception{
+public:
+    const char* what() const throw(){
+        return "Key alreay exists";
+    }
+};
+
 #endif

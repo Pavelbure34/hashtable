@@ -69,14 +69,14 @@ int main(){
     assert(cht.itemNum() == 10);
     assert(sht.itemNum() == 14);
 
-    // //testing loadfactor
+    //testing loadfactor
     assert(iht.loadfactor() == 2); //10 items in 5 slots
     assert(dht.loadfactor() == 2);
     assert(fht.loadfactor() == 2);
     assert(cht.loadfactor() == 2);
     assert(sht.loadfactor() == (14 / 50.0));
 
-    // //testing assingment operator and copy constructor with non empty tree
+    // testing assingment operator and copy constructor with non empty tree
     hashTable<int> cIht3 = iht;
     hashTable<int> cIht4(iht);
     hashTable<double> cDht3 = dht;
@@ -87,7 +87,7 @@ int main(){
     hashTable<char> cCht4(cht);
 
 
-    // //testing toStr with non empty tree
+    //testing toStr with non empty tree
     for (int i = 0; i < 5; i++){
         assert(iht.toStr(i) == cIht3.toStr(i));
         assert(iht.toStr(i) == cIht4.toStr(i));
@@ -99,13 +99,13 @@ int main(){
         assert(cht.toStr(i) == cCht4.toStr(i));
     }
 
-    // //testing remove function
+    //testing remove function
     iht.remove(5);
     dht.remove(7.0);
     fht.remove(7.0f);
     cht.remove(62);
 
-    // //should throw an error when searching for 5 and 7
+    //should throw an error when searching for 5 and 7
     try{
         iht.get(5);
     }catch(noKeyException *e){
