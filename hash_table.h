@@ -60,7 +60,6 @@ protected:
     void initializer(int sNum);
     void copy(const hashTable<T> &h);
     void destroy();
-    int getLocation(const T &k) const;
 };
 #include "hash_table.cpp"
 #endif

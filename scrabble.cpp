@@ -4,16 +4,18 @@
 #include <map>
 
 /*
-  This is scrabble.
+  This is scrabble file calculating standard deviation
+  for our custom hash functions
+  
+  coded by Alistaire Suh and Katie Masell.
 */
 
-int hashFun(string &s){
+int hashFun(string &key, int slots = 1000){
     double sum = 0.0;
-    for (int i = 0; i < s.length(); i++)
-        sum += (int(s[i]) * (i + 1));
-    sum = sum / double(s.length());
-    double A = (sqrt(5) - 1) / 2; 
-    return 1000 * (fmod(A * double(sum), 1));
+    for (int i = 0; i < key.length(); i++)
+        sum += pow((int(key[i]) * (i + 1)),2);
+    sum = sqrt(sum); 
+    return int(slots * (fmod(KA * double(sum), 1)));
 }
 
 void readFile(std::string file,  map<int, int> &hashNumLengths){
@@ -73,7 +75,7 @@ void getNums(string file, int &min, int& max, double& std){
   for (int i = 0; i < allValues.size(); i++){
     total += pow((allValues[i] - mean), 2);
   }
-  std = sqrt(total/allValues.size());
+  std = sqrt(total / allValues.size());
 }
 
 int main(int argc, char const *argv[]) {
@@ -83,6 +85,11 @@ int main(int argc, char const *argv[]) {
   int min, max = 0;
   double std = 0;
   getNums("scrabble.csv", min, max, std);
-  cout << std << endl;
+
+  cout << "<---------Result>-------->" << endl;
+  cout << "  std : " << std << endl;
+  cout << "  min : " << min << endl;
+  cout << "  max : " << max << endl;
+  cout << "<------------------------>" << endl;
   return 0;
 }

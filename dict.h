@@ -11,26 +11,25 @@
 #include "exceptions.h"
 using namespace std;
 
-template<class KeyType>
-class dictionary: public hashTable<KeyType> {
+template<class T>
+class dictionary: public hashTable<T> {
 private:
-    using hashTable<KeyType>::slots;
-    using hashTable<KeyType>::items;
-    using hashTable<KeyType>::table;
+    using hashTable<T>::slots;
+    using hashTable<T>::items;
+    using hashTable<T>::table;
 
 public:
     dictionary(int slots = DEFAULT_SLOTS);
 
-    void insert(KeyType *key);
-    using hashTable<KeyType>::insert;
-    using hashTable<KeyType>::get;
-    using hashTable<KeyType>::itemNum;
-    using hashTable<KeyType>::remove;
+    void insert(T *key);
+    // using hashTable<T>::insert;
+    using hashTable<T>::get;
+    using hashTable<T>::itemNum;
+    using hashTable<T>::remove;
 
 private:
-    bool isDuplicate(KeyType &key);
-    using hashTable<KeyType>::initializer;
-    
+    bool isDuplicate(T &key);
+    using hashTable<T>::initializer;
 };
 #include "dict.cpp"
 #endif
