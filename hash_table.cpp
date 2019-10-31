@@ -12,7 +12,7 @@ bool hashNode<S,T>::operator>(hashNode<S, T> &node) const{
 }
 
 template<class S, class T>
-bool hashNode<S,T>::operator==(hashNode<S, T> &node) const{
+bool hashNode<S,T>::operator==(hashNode<S, T> node) const{
     return this->key == node.key;
 }
 
@@ -24,6 +24,18 @@ bool hashNode<S,T>::operator>=(hashNode<S, T> &node) const{
 template<class S, class T>
 bool hashNode<S,T>::operator<=(hashNode<S, T> &node) const{
     return this->key <= node.key;
+}
+
+template<class S, class T>
+string  hashNode<S,T>::toString() const{
+    string str = to_string(key) + " : " + to_string(value);
+    return str;
+}
+
+template<>
+string  hashNode<string,string>::toString() const{
+    string str = key + " : " + value;
+    return str;
 }
 
 // template<class S, class T>
@@ -208,6 +220,23 @@ int hashTable<string>::hash(string &key) const{
     sum = sum / double(key.length());
     return slots * (fmod(KA * double(sum), 1));
 }
+
+template<>
+int hashTable<hashNode<string, string>>::hash(hashNode<string, string> &key) const{
+    /*
+        this function returns key for hashtable in key-value pair.
+
+        PreCondition:
+            table has to be initialized as an array of List<T>.
+    */
+    double sum = 0.0;
+    for (int i = 0; i < key.key.length(); i++)
+        sum += (int(key.key[i]) * (i + 1));
+    sum = sum / double(key.key.length());
+    return slots * (fmod(KA * double(sum), 1));
+}
+
+
 
 template<class T>
 void hashTable<T>::copy(const hashTable<T> &h){

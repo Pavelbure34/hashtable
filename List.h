@@ -47,7 +47,7 @@ public:
     }
     T* pop(int index);
     T* pop();
-    int findIndex(const T &item);
+    int findIndex(T item);
     void clear();
 
 private:

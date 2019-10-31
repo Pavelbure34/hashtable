@@ -15,8 +15,11 @@ void readFile(string file, dictionary<hashNode<string, string>>& movies){
     string line;
     int howMany = 0;
     string movieKey, movieValue;
-    int i= 0;
+    int i = 0;
+    int j = 1;
     while(getline(imdbFile, line, '\t')){
+        if (j == 10)
+          break;
         if(howMany == 2)
             movieKey = line;
         if(howMany == 8){
@@ -32,36 +35,50 @@ void readFile(string file, dictionary<hashNode<string, string>>& movies){
                 adjustedValue = "No Genre Available";
             }
             hashNode<string, string> *temp = new hashNode<string, string>(movieKey, adjustedValue);
+            cout << temp->toString() << endl;
             movies.insert(temp);
-        }
+          }
         howMany ++;
+        j++;
     }
     imdbFile.close();
 }
 
 string getMovieGenre(dictionary<hashNode<string, string>> movies, string s){
-    string get;
-    hashNode<string, string> targetNode(s, "");
-    hashNode<string, string> moviegen = *(movies.get(targetNode));
-    get = moviegen.value;
-    return get;
+    try{
+      string get;
+      hashNode<string, string> targetNode(s, "");
+      hashNode<string, string> moviegen = *(movies.get(targetNode));
+      cout << "here" << endl;
+      get = moviegen.value;
+      return get;
+    }catch(noKeyException *e){
+      throw new noKeyException;
+    }
 }
 
 
-int main(int argc, char const *argv[])
-{   
+int main(int argc, char const *argv[]){
     string s = "";
+    string g;
     dictionary<hashNode<string, string>> movies;
-    readFile("imdb.tsv", movies);
+    readFile("data.tsv", movies);
     cout << "Welcome to our movie collection" << endl;
     cout << "----------------------------------" << endl;
-    cout << "Type a movie that you are interested in     ";
-    while(s != "exit genre collection"){
-        cin >> s;
-        getMovieGenre(movies, s);
-        cout << "If you would like to search another, type it in" << endl;
-        cout << "Otherwise, type exit genre collection";
-        cin >> s;
+    cout << "Type a movie that you are interested in:  ";
+    while(true){
+        cout << "//type exit program to quit program//" << endl;
+        cout << "Movie title >> ";
+        if (s == "exit program")
+          break;
+        getline(cin, s);
+        cout << endl;
+        try{
+          g = getMovieGenre(movies, s);
+          cout << s << " : " << g << endl;;
+        }catch(noKeyException *e){
+          cout << "no movie found" << endl;
+        }
     }
     return 0;
 }

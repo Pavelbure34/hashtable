@@ -19,12 +19,16 @@ public:
 
     bool operator<(hashNode<S, T> &node) const;
     bool operator>(hashNode<S, T> &node) const;
-    bool operator==(hashNode<S, T> &node) const;
+    bool operator==(hashNode<S, T> node) const;
     bool operator>=(hashNode<S, T> &node) const;
     bool operator<=(hashNode<S, T> &node) const;
-
-private:
     string toString() const;
+
+    // friend ostream& operator<<(ostream &o, hash<S, T> &n){
+    //     //this friend function enables osteam operator.
+    //     o << n.toString();
+    //     return o;
+    // }
 };
 
 template<class T>

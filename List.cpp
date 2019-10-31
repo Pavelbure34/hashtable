@@ -21,13 +21,13 @@ List<T>::~List(){
 }
 
 template<typename T>
-int List<T>::findIndex(const T &item) {
+int List<T>::findIndex(T item){
     //this funciton returns the index of the item within the list
     List<T> temp = *this;
-    T target;
+    T *target;
     for (int i = 0; i < size;i++){
-        target = *temp[i];
-        if (target == item)
+        target = temp[i];
+        if (*target == item)
             return i;
     }
     return -1;
