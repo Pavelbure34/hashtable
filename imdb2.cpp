@@ -41,7 +41,8 @@ void readFile(string file, dictionary<hashNode<string, string>>& movies){
 
 string getMovieGenre(dictionary<hashNode<string, string>> movies, string s){
     string get;
-    hashNode<string, string> moviegen = movies.get(s);
+    hashNode<string, string> targetNode(s, "");
+    hashNode<string, string> moviegen = *(movies.get(targetNode));
     get = moviegen.value;
     return get;
 }
@@ -59,11 +60,8 @@ int main(int argc, char const *argv[])
         cin >> s;
         getMovieGenre(movies, s);
         cout << "If you would like to search another, type it in" << endl;
-        cout << "Otherwise, type exit genre collection"
-    
+        cout << "Otherwise, type exit genre collection";
         cin >> s;
     }
-
-
     return 0;
 }
