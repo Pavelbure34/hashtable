@@ -16,10 +16,7 @@ void readFile(string file, dictionary<hashNode<string, string>>& movies){
     int howMany = 0;
     string movieKey, movieValue;
     int i = 0;
-    int j = 1;
     while(getline(imdbFile, line, '\t')){
-        if (j == 10)
-          break;
         if(howMany == 2)
             movieKey = line;
         if(howMany == 8){
@@ -35,11 +32,9 @@ void readFile(string file, dictionary<hashNode<string, string>>& movies){
                 adjustedValue = "No Genre Available";
             }
             hashNode<string, string> *temp = new hashNode<string, string>(movieKey, adjustedValue);
-            cout << temp->toString() << endl;
             movies.insert(temp);
           }
         howMany ++;
-        j++;
     }
     imdbFile.close();
 }
@@ -49,7 +44,6 @@ string getMovieGenre(dictionary<hashNode<string, string>> movies, string s){
       string get;
       hashNode<string, string> targetNode(s, "");
       hashNode<string, string> moviegen = *(movies.get(targetNode));
-      cout << "here" << endl;
       get = moviegen.value;
       return get;
     }catch(noKeyException *e){
@@ -69,9 +63,9 @@ int main(int argc, char const *argv[]){
     while(true){
         cout << "//type exit program to quit program//" << endl;
         cout << "Movie title >> ";
-        if (s == "exit program")
-          break;
         getline(cin, s);
+        if (s == "exit program")
+          return false;
         cout << endl;
         try{
           g = getMovieGenre(movies, s);
