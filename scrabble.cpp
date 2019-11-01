@@ -11,11 +11,11 @@
 */
 
 int hashFun(string &key, int slots = 1000){
-    double sum = 0.0;
+    long double sum = 0.0;
     for (int i = 0; i < key.length(); i++)
         sum += pow((int(key[i]) * (i + 1)),2);
-    sum = sqrt(sum);
-    return int(slots * (fmodl(KA * double(sum), 1)));
+    sum = sqrt(sum); 
+    return int(slots * (fmodl(KA * sum, 1)));
 }
 
 void readFile(std::string file,  map<int, int> &hashNumLengths){

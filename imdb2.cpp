@@ -33,7 +33,7 @@ void readFile(string file, dictionary<hashNode<string, string>>& movies){
                 adjustedValue = "No Genre Available";
             }
             movies.insert(new hashNode<string, string>(movieKey, adjustedValue));
-            if (movies.itemNum() == 1000)
+            if (movies.itemNum() == 500)
               break;
           }
         howMany ++;
@@ -58,7 +58,7 @@ int main(int argc, char const *argv[]){
 
     string s = "";
     string g;
-    dictionary<hashNode<string, string>> movies(1000000000);
+    dictionary<hashNode<string, string>> movies(1000);
 
     cout << "---------now loading-------" << endl;
     gettimeofday(&timeBefore, NULL);     //time count init
@@ -66,8 +66,8 @@ int main(int argc, char const *argv[]){
     gettimeofday(&timeAfter, NULL);       //time count done
 
     cout << movies.itemNum() << " entry successfully encoded" << endl;
-    cout << "load factor: " << movies.loadfactor() << endl;
-    cout << "effective load factor: " << movies.actualLF() << endl;
+    // cout << "load factor: " << movies.loadfactor() << endl;
+    // cout << "effective load factor: " << movies.actualLF() << endl;
 
     //calculating run time of encoding under hashTable based dictionary
     diffSeconds = timeAfter.tv_sec - timeBefore.tv_sec;

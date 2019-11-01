@@ -214,12 +214,12 @@ int hashTable<string>::hash(string &key) const{
         PreCondition:
             table has to be initialized as an array of List<T>.
     */
-    double sum = 0.0;
+    long double sum = 0.0;
     for (int i = 0; i < key.length(); i++)
         sum += pow((int(key[i]) * (i + 1)),2);
     sum = sqrt(sum);
     //cout << int(slots * (fmod(KA * double(sum), 1))) << endl;
-    return int(slots * (fmodl(KA * double(sum), 1)));
+    return int(slots * (fmodl(KA * sum, 1)));
 }
 
 template<>
@@ -230,11 +230,11 @@ int hashTable<hashNode<string, string>>::hash(hashNode<string, string> &key) con
         PreCondition:
             table has to be initialized as an array of List<T>.
     */
-   double sum = 0.0;
+   long double sum = 0.0;
     for (int i = 0; i < key.key.length(); i++)
         sum += pow((int(key.key[i]) * (i + 1)),2);
     sum = sqrt(sum);
-    return int(slots * (fmod(KA * double(sum), 1)));
+    return int(slots * (fmod(KA * sum, 1)));
 }
 
 template<class T>
@@ -243,10 +243,10 @@ void hashTable<T>::copy(const hashTable<T> &h){
         This function executes the deep copy.
         Precondition: table has to initialized with h's slot num
     */
-    List<T>* copyL = h.getTable();   //table from h
+    List<T>* copyL = h.getTable();    //table from h
     table = new List<T>[h.slotNum()];
     for (int i = 0; i < h.slotNum(); i++)
-        table[i] = copyL[i];         //deep copying element to element.
+        table[i] = copyL[i];          //deep copying element to element.
     items = h.itemNum();
 }
 
