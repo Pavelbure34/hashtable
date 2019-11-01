@@ -84,7 +84,7 @@ int main(int argc, char const *argv[]){
         cout << "Movie title >> ";
         getline(cin, s);
         if (s == "exit program")
-          return false;
+          break;
         cout << endl;
         try{
           g = getMovieGenre(movies, s);
