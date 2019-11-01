@@ -6,7 +6,7 @@
 /*
   This is scrabble file calculating standard deviation
   for our custom hash functions
-  
+
   coded by Alistaire Suh and Katie Masell.
 */
 
@@ -14,7 +14,7 @@ int hashFun(string &key, int slots = 1000){
     double sum = 0.0;
     for (int i = 0; i < key.length(); i++)
         sum += pow((int(key[i]) * (i + 1)),2);
-    sum = sqrt(sum); 
+    sum = sqrt(sum);
     return int(slots * (fmod(KA * double(sum), 1)));
 }
 

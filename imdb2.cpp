@@ -32,9 +32,14 @@ void readFile(string file, dictionary<hashNode<string, string>>& movies){
             if(adjustedValue == "\\N") { //check for movies without a genre
                 adjustedValue = "No Genre Available";
             }
-            hashNode<string, string> *temp = new hashNode<string, string>(movieKey, adjustedValue);
-            cout << temp->toString() << endl;
-            movies.insert(temp);
+            hashNode<string, string> *newNode = new hashNode<string, string>(movieKey, adjustedValue);
+            // hashNode<string, string> newNode(movieKey, adjustedValue);
+            // cout << temp->toString() << endl;
+            // movies.insert(new hashNode<string, string>(movieKey, adjustedValue));
+            // movies.insert(&newNode);
+            movies.insert(newNode);
+            delete newNode;
+            cout << movies.itemNum() << endl;
           }
         howMany ++;
     }
@@ -57,11 +62,11 @@ int main(int argc, char const *argv[]){
     ofstream o;
     o.open("hashtableTime.txt");
     timeval timeBefore, timeAfter;          //time variables
-    long diffSeconds, diffUSeconds;           
+    long diffSeconds, diffUSeconds;
 
     string s = "";
     string g;
-    dictionary<hashNode<string, string>> movies;
+    dictionary<hashNode<string, string>> movies(100000000);
 
     gettimeofday(&timeBefore, NULL);     //time count init
     readFile("data.tsv", movies);

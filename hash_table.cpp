@@ -66,6 +66,20 @@ double hashTable<T>::loadfactor() const{
 }
 
 template<class T>
+double hashTable<T>::actualLF() const{
+  /*
+      This function returns more accurate load factor.
+      Precondition: table has to initialized with h's slot num
+  */
+  double sum = 0.0;
+  for (int i = 0; i < slots; i++){
+    sum += pow(table[i].length(),2); //square the length of linked list in each slot and add up
+  }
+  sum = sqrt(sum);                  //square root of the sum
+  return sum / slots;               //divide by slots for more accruate load factor
+}
+
+template<class T>
 void hashTable<T>::initializer(int sNum){
     /*
         this fuction set up the class property based on the parameter.
@@ -110,8 +124,10 @@ void hashTable<T>::insert(T *k){
         Pre-Condition:
             table has to be initialized as an array of List<T>
     */
-    int key = hash(*k);        //key from hash function
+    int key = hash(*k);      //key from hash function
     table[key].prepend(k);   //prepend the item.
+    // table[key].append(k);   //prepend the item.
+    // table[key].insert(k, 0);   //prepend the item.
     items++;
 }
 
@@ -227,7 +243,6 @@ void hashTable<T>::copy(const hashTable<T> &h){
     */
     List<T>* copyL = h.getTable();   //table from h
     for (int i = 0; i < h.slotNum(); i++){
-
         table[i] = copyL[i];         //deep copying element to element.
         items++;
     }

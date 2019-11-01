@@ -54,6 +54,7 @@ public:
     List<T>* getTable() const;
 
     double loadfactor() const;
+    double actualLF() const;
 
 protected:
     int hash(T &val) const;
@@ -61,5 +62,13 @@ protected:
     void copy(const hashTable<T> &h);
     void destroy();
 };
+
+int factorial(int n){
+  if (n == 0)
+    return 0;
+  else
+    return n + factorial(n - 1);
+}
+
 #include "hash_table.cpp"
 #endif

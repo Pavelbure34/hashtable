@@ -40,10 +40,13 @@ void List<T>::prepend(T *item){
             append(item);
             break;
         default:
-            node<T>* temp = new node<T>();
-            temp->item = new T(*item);
-            temp->next = head;
-            head = temp;
+            node<T> *newN, *temp;
+            temp = head;
+            //node to prepend
+            newN = new node<T>();
+            newN->item = new T(*item);
+            newN->next = temp;   //shifting everything up by 1 to the right
+            head = newN;
             size++;
     }
 }
