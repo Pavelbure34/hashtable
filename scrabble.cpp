@@ -86,10 +86,10 @@ int main(int argc, char const *argv[]) {
   double std = 0;
   getNums("scrabble.csv", min, max, std);
 
-  cout << "<---------Result>-------->" << endl;
+  cout << "<---------<Result>-------->" << endl;
   cout << "  std : " << std << endl;
   cout << "  min : " << min << endl;
   cout << "  max : " << max << endl;
-  cout << "<------------------------>" << endl;
+  cout << "<------------------------->" << endl;
   return 0;
 }
