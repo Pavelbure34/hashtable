@@ -13,7 +13,7 @@ void test_insert(dictionary<T> &d, T item1, T item2){
     d.insert(&item2);
 
     int prev, after;
-    prev = d.itemNum(); 
+    prev = d.itemNum();
     //overlapped item should not be added.
     d.insert(&item2);
     after = d.itemNum();

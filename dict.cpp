@@ -16,8 +16,8 @@ dictionary<T>::dictionary(int slots){
 
 template<class T>
 void dictionary<T>::insert(T *key) { //key is a key value pair
-  if(isDuplicate(*key)) { //check if node key's key is already in the BST
-    return;               //error
+  if(isDuplicate(*key)) {    //check if node key's key is already in the BST
+    return;                  //do nothing
   }
   hashTable<T>::insert(key); //otherwise, insert the node into the BST
 }
@@ -30,5 +30,5 @@ bool dictionary<T>::isDuplicate(T &key){
    return true;
   }catch(noKeyException *e){
     return false;
-  } 
+  }
 }

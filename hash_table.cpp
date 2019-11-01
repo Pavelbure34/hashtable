@@ -104,8 +104,10 @@ T* hashTable<T>::get(const T &k) const{
     for (int i = 0; i < slots; i++){
         index = table[i].findIndex(k);
         if (index != -1){
-            T *val = new T(*table[i][index]);
-            return val;
+            // T *val = new T(*table[i][index]);
+            // return val;
+            // return new T(*table[i][index]);
+            return table[i][index];
         }
     }
     throw new noKeyException; //if not found,
@@ -167,10 +169,10 @@ string hashTable<T>::toStr(int slot) const{
         PreCondition:
             table has to be initialized as an array of List<T>.
     */
-    string str = "[";
-    str += to_string(slot);
-    str += "]=";
-    str += table[slot].toString();
+    string str = "[" + to_string(slot) + "]=" + table[slot].toString() + "";
+    // str += to_string(slot);
+    // str += "]=";
+    // str += table[slot].toString();
     return str;
 }
 
@@ -190,7 +192,7 @@ int hashTable<T>::hash(T &key) const{
         PreCondition:
             table has to be initialized as an array of List<T>.
     */
-    return int(slots * (fmod(KA * double(key), 1)));
+    return int(slots * (fmodl(KA * double(key), 1)));
 }
 
 template<>
@@ -201,7 +203,7 @@ int hashTable<char>::hash(char &key) const{
         PreCondition:
             table has to be initialized as an array of List<T>.
     */
-    return int(slots * (fmod(KA * double(key), 1)));
+    return int(slots * (fmodl(KA * double(key), 1)));
 }
 
 template<>
@@ -217,7 +219,7 @@ int hashTable<string>::hash(string &key) const{
         sum += pow((int(key[i]) * (i + 1)),2);
     sum = sqrt(sum);
     //cout << int(slots * (fmod(KA * double(sum), 1))) << endl;
-    return int(slots * (fmod(KA * double(sum), 1)));
+    return int(slots * (fmodl(KA * double(sum), 1)));
 }
 
 template<>
@@ -242,10 +244,10 @@ void hashTable<T>::copy(const hashTable<T> &h){
         Precondition: table has to initialized with h's slot num
     */
     List<T>* copyL = h.getTable();   //table from h
-    for (int i = 0; i < h.slotNum(); i++){
+    table = new List<T>[h.slotNum()];
+    for (int i = 0; i < h.slotNum(); i++)
         table[i] = copyL[i];         //deep copying element to element.
-        items++;
-    }
+    items = h.itemNum();
 }
 
 template<class T>
@@ -256,10 +258,9 @@ void hashTable<T>::destroy(){
             Table should not be NULL. It is not to be executed when it is NULL.
    */
     for (int i = 0; i < slots; i++) //going through every slot
-        if (table[i].length() != 0) //if linked list in the slot is not empty
-            table[i].clear();       //clear the single linked list
-    items = slots = 0;              //back to 0
-    //delete table;                 //delete the pointer. fix here
+      table[i].clear();
+    items = slots = 0;             //back to 0
+    // delete table;                 //delete the pointer. fix here
 }
 
 template<class T>

@@ -16,8 +16,14 @@ public:
     T* item;
     node<T> *next;
 
-    node(T* item = NULL, node<T>* next = NULL):
-        item(item), next(next){};
+    node(T* item = NULL, node<T>* next = NULL){
+          this->item = new T(*item);
+          this->next = next;
+    };
+
+    ~node(){
+      delete item;
+    }
 };
 
 

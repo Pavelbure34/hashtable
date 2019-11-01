@@ -20,13 +20,13 @@ int main(){
     hashTable<float> cFht1 = fht;
     hashTable<char> cCht1 = cht;
 
-    // //testing copy constructor on empty tree
+    //testing copy constructor on empty tree
     hashTable<int> cIht2(iht);
     hashTable<double> cDht2(dht);
     hashTable<float> cFht2(fht);
     hashTable<char> cCht2(cht);
 
-    // //testing toStr with empty tree
+    //testing toStr with empty tree
      for (int i = 0; i < iht.slotNum(); i++){
         assert(iht.toStr(i) == cIht1.toStr(i));
         assert(iht.toStr(i) == cIht2.toStr(i));
@@ -35,7 +35,6 @@ int main(){
         assert(fht.toStr(i) == cFht1.toStr(i));
         assert(fht.toStr(i) == cFht2.toStr(i));
         assert(cht.toStr(i) == cCht1.toStr(i));
-
      }
 
     //testing insert and embedded genSlotNum, minItemSlot.
@@ -60,7 +59,6 @@ int main(){
      sht.insert(snum);
      snum = new string("test");
      sht.insert(snum);
-
 
     //reaching here, hash has been working fine.
     assert(iht.itemNum() == 10);

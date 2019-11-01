@@ -32,14 +32,9 @@ void readFile(string file, dictionary<hashNode<string, string>>& movies){
             if(adjustedValue == "\\N") { //check for movies without a genre
                 adjustedValue = "No Genre Available";
             }
-            hashNode<string, string> *newNode = new hashNode<string, string>(movieKey, adjustedValue);
-            // hashNode<string, string> newNode(movieKey, adjustedValue);
-            // cout << temp->toString() << endl;
-            // movies.insert(new hashNode<string, string>(movieKey, adjustedValue));
-            // movies.insert(&newNode);
-            movies.insert(newNode);
-            delete newNode;
-            cout << movies.itemNum() << endl;
+            movies.insert(new hashNode<string, string>(movieKey, adjustedValue));
+            if (movies.itemNum() == 1000)
+              break;
           }
         howMany ++;
     }
@@ -48,11 +43,8 @@ void readFile(string file, dictionary<hashNode<string, string>>& movies){
 
 string getMovieGenre(dictionary<hashNode<string, string>> movies, string s){
     try{
-      string get;
       hashNode<string, string> targetNode(s, "");
-      hashNode<string, string> moviegen = *(movies.get(targetNode));
-      get = moviegen.value;
-      return get;
+      return movies.get(targetNode)->value;
     }catch(noKeyException *e){
       throw new noKeyException;
     }
@@ -66,11 +58,16 @@ int main(int argc, char const *argv[]){
 
     string s = "";
     string g;
-    dictionary<hashNode<string, string>> movies(100000000);
+    dictionary<hashNode<string, string>> movies(1000000000);
 
+    cout << "---------now loading-------" << endl;
     gettimeofday(&timeBefore, NULL);     //time count init
     readFile("data.tsv", movies);
     gettimeofday(&timeAfter, NULL);       //time count done
+
+    cout << movies.itemNum() << " entry successfully encoded" << endl;
+    cout << "load factor: " << movies.loadfactor() << endl;
+    cout << "effective load factor: " << movies.actualLF() << endl;
 
     //calculating run time of encoding under hashTable based dictionary
     diffSeconds = timeAfter.tv_sec - timeBefore.tv_sec;

@@ -42,10 +42,10 @@ void List<T>::prepend(T *item){
         default:
             node<T> *newN, *temp;
             temp = head;
-            //node to prepend
-            newN = new node<T>();
-            newN->item = new T(*item);
-            newN->next = temp;   //shifting everything up by 1 to the right
+            // newN = new node<T>();     //node to prepend
+            // newN->item = new T(*item);
+            // newN->next = temp;        //shifting everything up by 1 to the right
+            newN = new node<T>(item, temp);
             head = newN;
             size++;
     }
@@ -56,28 +56,28 @@ void List<T>::append(T *item){
     //this function appends item at the end.
     switch(size){
         case 0:                              //if size equals to 0,
-            head = new node<T>();            //set up head with new item.
-            head->item = new T(*item);
-            head->next = NULL;
+            head = new node<T>(item);            //set up head with new item.
+            // head->item = new T();
+            // head->next = NULL;
             size++;                          //increment the size
-            return;
+            break;
         case 1:                              //if size equals to 1,
-            head->next = new node<T>();      //just next to head
-            head->next->item = new T(*item); //set up new node
-            head->next->next = NULL;
+            head->next = new node<T>(item);  //just next to head
+            // head->next->item = new T(*item); //set up new node
+            // head->next->next = NULL;
             size++;                          //increment the size
-            return;
+            break;
         default:                             //if size is bigger than 1,
-            node<T>* newNode = new node<T>();//set up new node.
-            newNode->item = new T(*item);
-            newNode->next = NULL;
+            // node<T>* newNode = new node<T>(item);//set up new node.
+            // newNode->item = new T(*item);
+            // newNode->next = NULL;
             node<T>* temp = head;            //move up to the last node.
-            for (int i = 0; i < size-1;i++){
+            for (int i = 0; i < size - 1;i++){
                 temp = temp->next;
             }
-            temp->next = newNode;            //append at the end
+            // temp->next = newNode;            //append at the end
+            temp->next = new node<T>(item);
             size++;                          //increment the size
-            return;
     }
 }
 
@@ -100,9 +100,9 @@ template<>
 string List<string>::toString(){
     //this funciton prints out an list into a string.
     string str = "{";                     //setting up a string
-    node<string>* temp = head;                 //starting from head node
+    node<string>* temp = head;            //starting from head node
     for (int i = 0; i < size; i++){       //until the tail node
-        str = str + *(temp->item);           //concatenate each item
+        str = str + *(temp->item);        //concatenate each item
         if (i != size - 1)
             str = str + ",";
         temp = temp->next;                //move to next node.
@@ -164,10 +164,10 @@ void List<T>::insert(T *item, int index){
         if (index > size-1 || index < size * -1)           //if index is out of bound,
             throw new IndexOutOfBoundException;            //throw an error
         node<T>* temp =  head;                             //set up temp as head
-        node<T>* newNode = new node<T>();                  //set up new node
-        *(newNode->item) = *item;
+        node<T>* newNode = new node<T>(item);                  //set up new node
+        // *(newNode->item) = *item;
         if (index == 0 || index == size * -1){             //if insert to head
-            newNode->next = temp;                          //append at the front.
+            newNode -> next = temp;                          //append at the front.
             head = newNode;                                //make it as new head
         }else{
             if (index >= 0)                                //if positive index,
@@ -277,11 +277,15 @@ T* List<T>::pop(){
 template<typename T>
 void List<T>::clear(){
     //this function deletes each node in the list.
-    //node<T>* temp = head;
+    // node<T>* temp, *current;
+    // current = head;
     for (int i = 0; i < size; i++){
         this->pop(i);
-        // delete temp;
-        // temp = temp->next;
+        // temp = current->next;
+        // delete current;
+        // current = temp;
+        // if (i == size - 1)
+        //   delete temp;
     }
     head = NULL;
     size = 0;
@@ -290,14 +294,14 @@ void List<T>::clear(){
 template<typename T>
 void List<T>::deepCopy(List<T> &copy){
     //this function carry out deep copy.
-    head = new node<T>();
+    // head = new node<T>();
     // head->item = copy[0];                  //copy each item from copy list
     // node<T>* temp = head;                  //to node in the current list.
     // node<T>* newNode;
     for (int i = 0; i < copy.length(); i++){
         this->append(copy[i]);
-        // newNode = new node<T>();
-        // newNode->item = copy[i];
+        // newNode = new node<T>(*(copy[i].item));
+        // // newNode->item = copy[i];
         // temp->next = newNode;
         // temp = temp->next;
     }
