@@ -24,11 +24,11 @@ public:
     bool operator<=(hashNode<S, T> &node) const;
     string toString() const;
 
-    // friend ostream& operator<<(ostream &o, hash<S, T> &n){
-    //     //this friend function enables osteam operator.
-    //     o << n.toString();
-    //     return o;
-    // }
+    friend ostream& operator<<(ostream &o, hashNode<S, T> &n){
+        //this friend function enables osteam operator.
+        o << n.toString();
+        return o;
+    }
 };
 
 template<class T>

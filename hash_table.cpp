@@ -38,24 +38,6 @@ string  hashNode<string,string>::toString() const{
     return str;
 }
 
-// template<class S, class T>
-// string hashNode<S,T>::toString() const{
-//     string str = "";
-//     str += to_string(this->key);
-//     str += ":";
-//     str += to_string(this->value);
-//     return str;
-// }
-
-// template<, class T>
-// string hashNode<string,T>::toString() const{
-//     string str = "";
-//     str += this->key;
-//     str += ":";
-//     str += to_string(this->value);
-//     return str;
-// }
-
 template<class T>
 hashTable<T>::hashTable(int numSlots){
     initializer(numSlots); //initializing class properties
@@ -217,7 +199,7 @@ int hashTable<string>::hash(string &key) const{
     double sum = 0.0;
     for (int i = 0; i < key.length(); i++)
         sum += pow((int(key[i]) * (i + 1)),2);
-    sum = sqrt(sum);  
+    sum = sqrt(sum);
     //cout << int(slots * (fmod(KA * double(sum), 1))) << endl;
     return int(slots * (fmod(KA * double(sum), 1)));
 }
