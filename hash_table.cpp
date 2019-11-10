@@ -100,15 +100,10 @@ T* hashTable<T>::get(const T &k) const{
 
         PreCondition: table has to be initialized as array of List<T>.
     */
-    int index;
-    for (int i = 0; i < slots; i++){
-        index = table[i].findIndex(k);
-        if (index != -1){
-            // T *val = new T(*table[i][index]);
-            // return val;
-            // return new T(*table[i][index]);
-            return table[i][index];
-        }
+    int index = hash(k);
+    for (int i = 0; i < table[index].length(); i++){
+        if (table[index][i] == k)
+            return table[index][i];
     }
     throw new noKeyException; //if not found,
 }
@@ -218,7 +213,6 @@ int hashTable<string>::hash(string &key) const{
     for (int i = 0; i < key.length(); i++)
         sum += pow((int(key[i]) * (i + 1)),2);
     sum = sqrt(sum);
-    //cout << int(slots * (fmod(KA * double(sum), 1))) << endl;
     return int(slots * (fmodl(KA * sum, 1)));
 }
 

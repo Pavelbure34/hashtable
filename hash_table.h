@@ -57,10 +57,10 @@ public:
     double actualLF() const;
 
 protected:
-    int hash(T &val) const;
     void initializer(int sNum);
     void copy(const hashTable<T> &h);
     void destroy();
+    int hash(T &val) const;
 };
 
 int factorial(int n){
