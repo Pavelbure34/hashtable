@@ -93,7 +93,7 @@ void hashTable<T>::initializer(int sNum){
 }
 
 template<class T>
-T* hashTable<T>::get(const T &k) const{
+T* hashTable<T>::get(T k) const{
     /*
         This function finds and return the pointer
         of the target value
@@ -102,7 +102,7 @@ T* hashTable<T>::get(const T &k) const{
     */
     int index = hash(k);
     for (int i = 0; i < table[index].length(); i++){
-        if (table[index][i] == k)
+        if (*table[index][i] == k)
             return table[index][i];
     }
     throw new noKeyException; //if not found,
@@ -210,10 +210,21 @@ int hashTable<string>::hash(string &key) const{
             table has to be initialized as an array of List<T>.
     */
     long double sum = 0.0;
-    for (int i = 0; i < key.length(); i++)
-        sum += pow((int(key[i]) * (i + 1)),2);
+    int len = key.length();
+
+  	for(int i=0; i< len; i++){
+  		sum += pow(key[i] * (i + 1), 2);
+    }
     sum = sqrt(sum);
-    return int(slots * (fmodl(KA * sum, 1)));
+    // cout << int(fmodl(sum, slots + 9)) << endl;
+  	return int(fmodl(sum, slots + 9));
+    // long double sum = 0.0;
+    // for (int i = 0; i < key.length(); i++)
+    //     sum += int(key[i]) * pow(53, i);
+    //     // sum += pow((int(key[i]) * (i + 1)),2);
+    // // sum = sqrt(sum);
+    // // return int(fmodl(slots * (fmodl(KA * sum, 1)), slots + 31));
+    // return int(fmodl(sum, slots + 11));
 }
 
 template<>

@@ -43,7 +43,7 @@ public:
     hashTable(const hashTable<T> &h);
     ~hashTable();
 
-    T* get(const T &k) const;
+    T* get(T k) const;
     void insert(T *k);
     void remove(const T &k);
     int slotNum() const;

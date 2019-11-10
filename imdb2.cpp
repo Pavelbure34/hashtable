@@ -33,8 +33,8 @@ void readFile(string file, dictionary<hashNode<string, string>>& movies){
                 adjustedValue = "No Genre Available";
             }
             movies.insert(new hashNode<string, string>(movieKey, adjustedValue));
-            if (movies.itemNum() == 500)
-              break;
+            // if (movies.itemNum() == 500)
+            //   break;
           }
         howMany ++;
     }
@@ -58,7 +58,7 @@ int main(int argc, char const *argv[]){
 
     string s = "";
     string g;
-    dictionary<hashNode<string, string>> movies(1000);
+    dictionary<hashNode<string, string>> movies(10000);
 
     cout << "---------now loading-------" << endl;
     gettimeofday(&timeBefore, NULL);     //time count init
